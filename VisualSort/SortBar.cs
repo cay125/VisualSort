@@ -14,8 +14,8 @@ namespace VisualSort
     {
         private int _index;
         private double gap, real_height;
-        private SolidColorBrush normal = new SolidColorBrush(Colors.LightBlue), InSort = new SolidColorBrush(Colors.BlueViolet);
-        private SolidColorBrush[] hightlight = new SolidColorBrush[2];
+        private SolidColorBrush normal = new SolidColorBrush(Colors.LightBlue);
+        private SolidColorBrush[] hightlight = new SolidColorBrush[3];
         public int Index
         {
             get { return _index; }
@@ -25,22 +25,10 @@ namespace VisualSort
         {
             get { return (Width + gap) * Index; }
         }
-        public static bool operator < (SortBar s1,SortBar s2)
-        {
-            return s1.real_height < s2.real_height;
-        }
-        public static bool operator > (SortBar s1, SortBar s2)
-        {
-            return s1.real_height > s2.real_height;
-        }
-        public static bool operator <= (SortBar s1, SortBar s2)
-        {
-            return s1.real_height <= s2.real_height;
-        }
-        public static bool operator >=(SortBar s1, SortBar s2)
-        {
-            return s1.real_height >= s2.real_height;
-        }
+        public static bool operator <  (SortBar s1,SortBar s2){ return s1.real_height < s2.real_height; }
+        public static bool operator >  (SortBar s1, SortBar s2){ return s1.real_height > s2.real_height; }
+        public static bool operator <= (SortBar s1, SortBar s2){ return s1.real_height <= s2.real_height; }
+        public static bool operator >= (SortBar s1, SortBar s2){ return s1.real_height >= s2.real_height; }
         public SortBar(double height,double width,int index,double gap=0):base()
         {
             Background = normal;
@@ -56,6 +44,7 @@ namespace VisualSort
             real_height = height;
             hightlight[0] = new SolidColorBrush(Colors.Orange);
             hightlight[1] = new SolidColorBrush(Colors.Green);
+            hightlight[2] = new SolidColorBrush(Colors.BlueViolet);
             BorderThickness = new Thickness(0);
         }
         
@@ -72,10 +61,14 @@ namespace VisualSort
         }
         public void MoveBarToTemp(int to_index)
         {
-            DoubleAnimation index_animation = new DoubleAnimation { From = LeftPosition, To = (Width + gap) * to_index, Duration = TimeSpan.FromSeconds(Settings.TimeSpanS), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
-            DoubleAnimation height_animation = new DoubleAnimation { From = 0, To = 100, Duration = TimeSpan.FromSeconds(Settings.TimeSpanS), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
+            DoubleAnimation index_animation = new DoubleAnimation { From = LeftPosition, To = (Width + gap) * to_index, Duration = TimeSpan.FromSeconds(Settings.TimeSpanS), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };          
             this.Index = to_index;
+            MoveBarUp();
             BeginAnimation(Canvas.LeftProperty, index_animation);
+        }
+        public void MoveBarUp()
+        {
+            DoubleAnimation height_animation = new DoubleAnimation { From = 0, To = 100, Duration = TimeSpan.FromSeconds(Settings.TimeSpanS), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
             BeginAnimation(Canvas.BottomProperty, height_animation);
         }
         public void MoveBarDown()
@@ -85,7 +78,7 @@ namespace VisualSort
         }
         public void HightLight(int i)
         {
-            if (i != 0 && i != 1)
+            if (i != 0 && i != 1 && i != 2) 
                 Background = normal;
             else
                 Background = hightlight[i];
@@ -93,10 +86,11 @@ namespace VisualSort
         public void UnHightLight()
         {
             Background = normal;
+            Opacity = 1;
         }
-        public void MarkInSort()
+        public void DisOpacity()
         {
-            Background = InSort;
+            Opacity = 0.3;
         }
     }
 }

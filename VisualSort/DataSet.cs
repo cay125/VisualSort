@@ -27,7 +27,7 @@ namespace VisualSort
             IndicateA.Visibility = System.Windows.Visibility.Hidden;
             IndicateB.Visibility = System.Windows.Visibility.Hidden;
             for (int i = 0; i < num; i++)
-                DataValue.Add(new SortBar(r.Next(10, 300), (canvas_width - (num - 1) * gap) / num, i, gap));
+                DataValue.Add(new SortBar(r.Next(50, 300), (canvas_width - (num - 1) * gap) / num, i, gap));
             ModifyRelaHeight();
         }
         public void InitCanvas()
@@ -45,10 +45,10 @@ namespace VisualSort
             canvas.Children.Add(IndicateB);
             Canvas.SetZIndex(IndicateB, 100);
         }
-        public void MarkBars(int first,int last)
+        public void MarkBars(int first, int last, int colors)
         {
-            for (int i = first; i <= last; i++) 
-                DataValue[i].MarkInSort();
+            for (int i = first; i <= last; i++)
+                DataValue[i].HightLight(colors);
         }
         public void UnMark(int first,int last)
         {
