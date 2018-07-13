@@ -61,26 +61,26 @@ namespace VisualSort
         
         public void InitSortBar()
         {
-            DoubleAnimation init_animation = new DoubleAnimation {From=0,To=Height,Duration=TimeSpan.FromSeconds(0.5), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
+            DoubleAnimation init_animation = new DoubleAnimation {From=0,To=Height,Duration=TimeSpan.FromSeconds(Settings.InitTimeSpan), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
             BeginAnimation(HeightProperty, init_animation);
         }
         public void MoveBar(int to_index)
         {
-            DoubleAnimation move_animation = new DoubleAnimation { From = LeftPosition, To = (Width + gap) * to_index, Duration = TimeSpan.FromSeconds(0.3), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
+            DoubleAnimation move_animation = new DoubleAnimation { From = LeftPosition, To = (Width + gap) * to_index, Duration = TimeSpan.FromSeconds(Settings.TimeSpanS), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
             this.Index = to_index;
             BeginAnimation(Canvas.LeftProperty, move_animation);
         }
         public void MoveBarToTemp(int to_index)
         {
-            DoubleAnimation index_animation = new DoubleAnimation { From = LeftPosition, To = (Width + gap) * to_index, Duration = TimeSpan.FromSeconds(0.3), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
-            DoubleAnimation height_animation = new DoubleAnimation { From = 0, To = 100, Duration = TimeSpan.FromSeconds(0.3), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
+            DoubleAnimation index_animation = new DoubleAnimation { From = LeftPosition, To = (Width + gap) * to_index, Duration = TimeSpan.FromSeconds(Settings.TimeSpanS), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
+            DoubleAnimation height_animation = new DoubleAnimation { From = 0, To = 100, Duration = TimeSpan.FromSeconds(Settings.TimeSpanS), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
             this.Index = to_index;
             BeginAnimation(Canvas.LeftProperty, index_animation);
             BeginAnimation(Canvas.BottomProperty, height_animation);
         }
         public void MoveBarDown()
         {
-            DoubleAnimation down_animation = new DoubleAnimation { From = 100, To = 0, Duration = TimeSpan.FromSeconds(0.3), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
+            DoubleAnimation down_animation = new DoubleAnimation { From = 100, To = 0, Duration = TimeSpan.FromSeconds(Settings.TimeSpanS), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
             BeginAnimation(Canvas.BottomProperty, down_animation);
         }
         public void HightLight(int i)

@@ -35,7 +35,7 @@ namespace VisualSort
         }
         public void MoveBar(int to_index)
         {
-            DoubleAnimation move_animation = new DoubleAnimation { From = LeftPosition, To = (Width + gap) * to_index, Duration = TimeSpan.FromSeconds(0.3), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
+            DoubleAnimation move_animation = new DoubleAnimation { From = LeftPosition, To = (Width + gap) * to_index, Duration = TimeSpan.FromSeconds(Settings.TimeSpanS), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
             this.Index = to_index;
             BeginAnimation(Canvas.LeftProperty, move_animation);
         }
