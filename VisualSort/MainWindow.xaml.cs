@@ -63,6 +63,8 @@ namespace VisualSort
                     thread.Start();
                     break;
                 case SortTypeEnum.QuickSort:
+                    thread = new Thread(new ThreadStart(QuickSort));
+                    thread.Start();
                     break;
                 case SortTypeEnum.BucketSort:
                     break;

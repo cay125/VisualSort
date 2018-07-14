@@ -158,5 +158,49 @@ namespace VisualSort
             }
             this.Dispatcher.Invoke(new Action(() => { dataSet.UnMark(0, Settings.TotalNums - 1); dataSet.IndicateA.Visibility = Visibility.Hidden; dataSet.IndicateB.Visibility = Visibility.Hidden; }));
         }
+        public void QuickSortRecursion(int _left,int _right)
+        {
+            int left = _left;
+            int right = _right;
+            SortBar temp;
+            if (left < right)
+            {
+                temp = dataSet.DataValue[left];
+                this.Dispatcher.Invoke(new Action(() => { dataSet.IndicateA.MoveBar(left); dataSet.IndicateB.MoveBar(right); }));
+                Thread.Sleep(Settings.TimeSpanMs);
+                while (left != right)
+                {
+                    while (right > left)
+                    {
+                        if (dataSet.DataValue[right] < temp) 
+                        {
+                            SwapAnimation(left, right);
+                            break;
+                        }
+                        this.Dispatcher.Invoke(new Action(() => { dataSet.IndicateB.MoveBar(--right); }));
+                        Thread.Sleep(Settings.TimeSpanMs);
+                    }
+
+                    while (left < right) 
+                    {
+                        if (dataSet.DataValue[left] > temp)
+                        {
+                            SwapAnimation(left, right);
+                            break;
+                        }
+                        this.Dispatcher.Invoke(new Action(() => { dataSet.IndicateA.MoveBar(++left); }));
+                        Thread.Sleep(Settings.TimeSpanMs);
+                    }
+                }
+                QuickSortRecursion(_left, left - 1);  
+                QuickSortRecursion(right + 1, _right);  
+            }
+        }
+        public void QuickSort()
+        {
+            this.Dispatcher.Invoke(new Action(() => { dataSet.IndicateA.Visibility = Visibility.Visible; dataSet.IndicateB.Visibility = Visibility.Visible; }));
+            QuickSortRecursion(0, Settings.TotalNums - 1);
+            this.Dispatcher.Invoke(new Action(() => { dataSet.IndicateA.Visibility = Visibility.Hidden; dataSet.IndicateB.Visibility = Visibility.Hidden; }));
+        }
     }
 }
