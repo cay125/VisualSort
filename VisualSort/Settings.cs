@@ -10,9 +10,8 @@ namespace VisualSort
     {
         public static int TotalNums = 12;
         public static double Gap = 1;
-        public static double TimeSpanS = 0.3;
+        public static int TimeSpanMs = 300;
         public static double InitTimeSpan = 0.5;
-        public static int TimeSpanMs = (int)(TimeSpanS * 1000);
-        
+        public static double TimeSpanS { get { return ((double)(TimeSpanMs)) / 1000; } }        
     }
 }

@@ -43,6 +43,7 @@ namespace VisualSort
         private void Run(object sender, RoutedEventArgs e)
         {
             Thread thread;
+            Settings.TimeSpanMs = Convert.ToInt32(TimeInput.Text);
             switch (sortType.SortEnum)
             {
                 case SortTypeEnum.SelectSort:
