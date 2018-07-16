@@ -202,5 +202,40 @@ namespace VisualSort
             QuickSortRecursion(0, Settings.TotalNums - 1);
             this.Dispatcher.Invoke(new Action(() => { dataSet.IndicateA.Visibility = Visibility.Hidden; dataSet.IndicateB.Visibility = Visibility.Hidden; }));
         }
+        public void BucketSort()
+        {
+            int i = 0;
+            List<List<SortBar>> radix = new List<List<SortBar>>();
+            for (i = 0; i < 10; i++)
+                radix.Add(new List<SortBar>());
+            for (int j = 10; j <= 1000; j *= 10)
+            {
+                for (i = 0; i < Settings.TotalNums; i++)
+                {
+                    int temp = (dataSet.DataValue[i] % j) / (j / 10);
+                    radix[temp].Add(dataSet.DataValue[i]);
+                }
+                i = 0;
+                this.Dispatcher.Invoke(new Action(() => { dataSet.CreatBucket(radix); }));
+                Thread.Sleep(Settings.TimeSpanMs);
+                for (int k = 0; k < 10; k++)
+                {
+                    for (int n = 0; n < radix[k].Count; n++)
+                    {
+                        dataSet.DataValue[i] = radix[k][n];
+                        this.Dispatcher.Invoke(new Action(() => { radix[k][n].MoveBarToTemp(i++); }));
+                        Thread.Sleep(Settings.TimeSpanMs);
+                    }
+                }
+                for (int k = 0; k < 10; k++)
+                    for (int n = 0; n < radix[k].Count; n++)
+                        this.Dispatcher.Invoke(new Action(() => { radix[k][n].MoveBarDown(); }));
+                Thread.Sleep(Settings.TimeSpanMs);
+                this.Dispatcher.Invoke(new Action(() => { dataSet.DeleteBucket(radix); }));
+                Thread.Sleep(Settings.TimeSpanMs);
+                for (i = 0; i < 10; i++)
+                    radix[i].Clear();
+            }
+        }
     }
 }

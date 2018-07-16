@@ -67,6 +67,8 @@ namespace VisualSort
                     thread.Start();
                     break;
                 case SortTypeEnum.BucketSort:
+                    thread = new Thread(new ThreadStart(BucketSort));
+                    thread.Start();
                     break;
                 case SortTypeEnum.InsertSort:
                     thread = new Thread(new ThreadStart(InsertSort));

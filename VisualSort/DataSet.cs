@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Threading;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace VisualSort
 {
@@ -84,6 +85,38 @@ namespace VisualSort
             DataValue[index2].MoveBar(index1);
             DataValue[index1] = DataValue[index2];
             DataValue[index2] = temp;            
+        }
+        public void CreatBucket(List<List<SortBar>> buckets)
+        {
+            List<Button> source = new List<Button>();
+            int add = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                if (buckets[i].Count > 0)
+                {
+                    int index = source.Count;
+                    source.Add(new Button { Width = DataValue[buckets[i].Count + add - 1].LeftPosition + DataValue[0].Width - DataValue[add].LeftPosition, Background = new SolidColorBrush(Colors.LightGray), Content = "桶" + i.ToString(), HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center, VerticalContentAlignment = System.Windows.VerticalAlignment.Top, BorderThickness = new System.Windows.Thickness(0), FontSize = 15, Foreground = new SolidColorBrush(Colors.DarkSlateGray) });
+                    canvas.Children.Add(source[index]);
+                    canvas.RegisterName("Bucket" + i.ToString(), source[index]);
+                    Canvas.SetBottom(source[index], 0);
+                    Canvas.SetLeft(source[index], DataValue[add].LeftPosition);
+                    Canvas.SetZIndex(source[index], -1);
+                    DoubleAnimation s = new DoubleAnimation { From = 0, To = canvas_height, Duration = TimeSpan.FromSeconds(Settings.InitTimeSpan), EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut } };
+                    source[index].BeginAnimation(Button.HeightProperty, s);
+                    add += buckets[i].Count;
+                }
+            }
+        }
+        public void DeleteBucket(List<List<SortBar>> buckets)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if (buckets[i].Count > 0)
+                {
+                    canvas.Children.Remove(canvas.FindName("Bucket" + i.ToString()) as Button);
+                    canvas.UnregisterName("Bucket" + i.ToString());
+                }
+            }
         }
     }
 }

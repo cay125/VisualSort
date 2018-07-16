@@ -14,7 +14,7 @@ namespace VisualSort
     {
         private int _index;
         private double gap, real_height;
-        private SolidColorBrush normal = new SolidColorBrush(Colors.LightBlue);
+        private SolidColorBrush normal = new SolidColorBrush(Colors.LightSkyBlue);
         private SolidColorBrush[] hightlight = new SolidColorBrush[3];
         public int Index
         {
@@ -25,10 +25,11 @@ namespace VisualSort
         {
             get { return (Width + gap) * Index; }
         }
-        public static bool operator <  (SortBar s1,SortBar s2){ return s1.real_height < s2.real_height; }
+        public static bool operator <  (SortBar s1, SortBar s2){ return s1.real_height < s2.real_height; }
         public static bool operator >  (SortBar s1, SortBar s2){ return s1.real_height > s2.real_height; }
         public static bool operator <= (SortBar s1, SortBar s2){ return s1.real_height <= s2.real_height; }
         public static bool operator >= (SortBar s1, SortBar s2){ return s1.real_height >= s2.real_height; }
+        public static int operator  %  (SortBar s1, int s2)    { return (int)s1.real_height % s2; }
         public SortBar(double height,double width,int index,double gap=0):base()
         {
             Background = normal;
@@ -46,6 +47,8 @@ namespace VisualSort
             hightlight[1] = new SolidColorBrush(Colors.Green);
             hightlight[2] = new SolidColorBrush(Colors.BlueViolet);
             BorderThickness = new Thickness(0);
+            Foreground = new SolidColorBrush(Colors.White);
+            Opacity = 0.7;
         }
         
         public void InitSortBar()
@@ -86,7 +89,7 @@ namespace VisualSort
         public void UnHightLight()
         {
             Background = normal;
-            Opacity = 1;
+            Opacity = 0.7;
         }
         public void DisOpacity()
         {
