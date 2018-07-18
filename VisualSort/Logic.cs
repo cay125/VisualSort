@@ -237,5 +237,37 @@ namespace VisualSort
                     radix[i].Clear();
             }
         }
+        public void HeapSort()
+        {
+            //1.构建大顶堆
+            this.Dispatcher.Invoke(new Action(() => { dataSet.IndicateA.Visibility = Visibility.Visible; dataSet.IndicateB.Visibility = Visibility.Visible; }));
+            for (int i = Settings.TotalNums / 2 - 1; i >= 0; i--)          
+                AdjustHeap(i, Settings.TotalNums);//从第一个非叶子结点从下至上，从右至左调整结构
+            //2.调整堆结构 + 交换堆顶元素与末尾元素
+            for (int j = Settings.TotalNums - 1; j > 0; j--)
+            {
+                this.Dispatcher.Invoke(new Action(() => { dataSet.IndicateA.Visibility = Visibility.Hidden; dataSet.IndicateB.Visibility = Visibility.Hidden; }));
+                Thread.Sleep(Settings.TimeSpanMs);
+                SwapAnimation(0, j);
+                this.Dispatcher.Invoke(new Action(() => { dataSet.IndicateA.Visibility = Visibility.Visible; dataSet.IndicateB.Visibility = Visibility.Visible; }));
+                AdjustHeap(0, j);//重新对堆进行调整
+            }
+            this.Dispatcher.Invoke(new Action(() => { dataSet.IndicateA.Visibility = Visibility.Hidden; dataSet.IndicateB.Visibility = Visibility.Hidden; }));
+        }
+        public void AdjustHeap(int i, int length)
+        {
+            SortBar temp = dataSet.DataValue[i];
+            for (int k = i * 2 + 1; k < length; k = k * 2 + 1)
+            {
+                if (k + 1 < length && dataSet.DataValue[k] < dataSet.DataValue[k + 1])
+                    k++;//如果左子结点小于右子结点，k指向右子结点
+                this.Dispatcher.Invoke(new Action(() => { dataSet.IndicateA.MoveBar(i); dataSet.IndicateB.MoveBar(k); }));
+                Thread.Sleep(Settings.TimeSpanMs);
+                if (dataSet.DataValue[k] > temp)
+                { SwapAnimation(i, k); i = k; }
+                else
+                { break; }
+            }
+        }
     }
 }

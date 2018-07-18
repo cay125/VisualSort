@@ -18,7 +18,7 @@ namespace VisualSort
         QuickSort  = 4,
         BucketSort = 5,
         InsertSort = 6,
-        HashSort   = 7
+        HeapSort   = 7
     }
     public class EnumToBooleanConverter : IValueConverter
     {

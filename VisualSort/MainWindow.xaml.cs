@@ -74,6 +74,10 @@ namespace VisualSort
                     thread = new Thread(new ThreadStart(InsertSort));
                     thread.Start();
                     break;
+                case SortTypeEnum.HeapSort:
+                    thread = new Thread(new ThreadStart(HeapSort));
+                    thread.Start();
+                    break;
                 default:
                     break;
             }

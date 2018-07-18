@@ -43,7 +43,7 @@
             <RadioButton Foreground="DimGray" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"  Grid.Row="0" Grid.Column="2" Content="快速排序" IsChecked="{Binding Path=SortEnum,Converter={StaticResource EnumToBooleanConverter},ConverterParameter={x:Static local:SortTypeEnum.QuickSort}}"/>
             <RadioButton Foreground="DimGray" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"  Grid.Row="1" Grid.Column="2" Content="基数排序" IsChecked="{Binding Path=SortEnum,Converter={StaticResource EnumToBooleanConverter},ConverterParameter={x:Static local:SortTypeEnum.BucketSort}}"/>
             <RadioButton Foreground="DimGray" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"  Grid.Row="0" Grid.Column="3" Content="插入排序" IsChecked="{Binding Path=SortEnum,Converter={StaticResource EnumToBooleanConverter},ConverterParameter={x:Static local:SortTypeEnum.InsertSort}}"/>
-            <RadioButton Foreground="DimGray" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"  Grid.Row="1" Grid.Column="3" Content="堆排序"   IsChecked="{Binding Path=SortEnum,Converter={StaticResource EnumToBooleanConverter},ConverterParameter={x:Static local:SortTypeEnum.HashSort}}"/>
+            <RadioButton Foreground="DimGray" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"  Grid.Row="1" Grid.Column="3" Content="堆排序"   IsChecked="{Binding Path=SortEnum,Converter={StaticResource EnumToBooleanConverter},ConverterParameter={x:Static local:SortTypeEnum.HeapSort}}"/>
             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="5">
                 <Label Foreground="DimGray" Content="控制台输出:" FontSize="14"/>
             </StackPanel>
