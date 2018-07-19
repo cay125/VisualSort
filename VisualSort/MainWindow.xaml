@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VisualSort"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="825">
+        Title="MainWindow" Height="500" Width="825" Loaded="WindowLoad">
     <Window.Resources>
         <local:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Window.Resources>
@@ -36,6 +36,10 @@
                 <TextBox Name="TimeInput" Width="40" Text="300" HorizontalContentAlignment="Right"  VerticalAlignment="Center"/>
                 <Label Content="MS(执行时间)" Foreground="DimGray"/>
             </StackPanel>
+            <StackPanel Grid.Column="4" Grid.Row="1" Orientation="Horizontal" >
+                <TextBox Name="Nums" Width="40" Text="12" HorizontalContentAlignment="Right"  VerticalAlignment="Center"/>
+                <Label Content="数据数量" Foreground="DimGray"/>
+            </StackPanel>
             <RadioButton Foreground="DimGray" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"  Grid.Row="0" Grid.Column="0" Content="选择排序" IsChecked="{Binding Path=SortEnum,Converter={StaticResource EnumToBooleanConverter},ConverterParameter={x:Static local:SortTypeEnum.SelectSort}}"/>
             <RadioButton Foreground="DimGray" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"  Grid.Row="1" Grid.Column="0" Content="冒泡排序" IsChecked="{Binding Path=SortEnum,Converter={StaticResource EnumToBooleanConverter},ConverterParameter={x:Static local:SortTypeEnum.BubbleSort}}"/>
             <RadioButton Foreground="DimGray" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"  Grid.Row="0" Grid.Column="1" Content="归并排序" IsChecked="{Binding Path=SortEnum,Converter={StaticResource EnumToBooleanConverter},ConverterParameter={x:Static local:SortTypeEnum.MergeSort}}"/>
@@ -59,6 +63,6 @@
             </Border>
         </Grid>
         <Button Margin="10" HorizontalAlignment="Left" Name="Generate" Click="GenerateNums" Grid.Row="1" Grid.Column="1" Content="生成" Background="White" BorderBrush="LightBlue" BorderThickness="2" Height="30" Width="70"/>
-        <Button Margin="10" VerticalAlignment="Center" Background="White" BorderBrush="LightBlue" BorderThickness="2" Click="Run" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Height="30" Width="70" Content="运行"/>
+        <Button Margin="10" VerticalAlignment="Center" Background="White" BorderBrush="LightBlue" BorderThickness="2" Click="Run" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Height="30" Width="70" Content="运行" Name="ToRun"/>
     </Grid>
 </Window>

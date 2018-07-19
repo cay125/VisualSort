@@ -59,6 +59,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="SortBar.cs" />
     <Compile Include="SortType.cs" />
+    <Compile Include="Status.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

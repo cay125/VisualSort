@@ -25,16 +25,32 @@ namespace VisualSort
     {
         DataSet dataSet;
         SortType sortType;
+        Status status;
         public MainWindow()
         {
             InitializeComponent();
             
             sortType = new SortType();
             DataContext = sortType;
+            status = new Status();
+            Binding statusBind1 = new Binding
+            {
+                Source = status,
+                Path = new PropertyPath("IsGenerateEn")
+            };
+            Binding statusBind2 = new Binding
+            {
+                Source = status,
+                Path = new PropertyPath("IsDataValid")
+            };
+            Generate.SetBinding(Button.IsEnabledProperty, statusBind1);
+            ToRun.SetBinding(Button.IsEnabledProperty, statusBind2);
         }
 
         private void GenerateNums(object sender, RoutedEventArgs e)
         {
+            status.IsDataValid = true;
+            Settings.TotalNums = Convert.ToInt32(Nums.Text);
             dataSet = new DataSet(area, Settings.TotalNums, Settings.Gap);
             area.Children.Clear();
             dataSet.InitCanvas();
@@ -44,6 +60,7 @@ namespace VisualSort
         {
             Thread thread;
             Settings.TimeSpanMs = Convert.ToInt32(TimeInput.Text);
+            status.IsGenerateEn = false;
             switch (sortType.SortEnum)
             {
                 case SortTypeEnum.SelectSort:
@@ -81,6 +98,11 @@ namespace VisualSort
                 default:
                     break;
             }
+        }
+
+        private void WindowLoad(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

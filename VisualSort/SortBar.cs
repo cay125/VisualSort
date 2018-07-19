@@ -41,7 +41,8 @@ namespace VisualSort
                 Height = height;
             Width = width;
             Index = index;
-            Content = height.ToString();
+            if (Settings.TotalNums <= 30) 
+                Content = height.ToString();
             real_height = height;
             hightlight[0] = new SolidColorBrush(Colors.Orange);
             hightlight[1] = new SolidColorBrush(Colors.Green);
