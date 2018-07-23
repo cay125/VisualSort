@@ -10,21 +10,37 @@ namespace VisualSort
     class Status : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private bool _isrunning, _isdatavalid;
+        private bool _isdatavalid, _isrunning;
+        private string _toRunContent;
         public Status()
         {
-            IsGenerateEn = true;
+            IsRunning = false;
             IsDataValid = false;
         }
-        public bool IsGenerateEn
+        public bool IsRunning
         {
             get { return _isrunning; }
             set
             {
                 _isrunning = value;
+                if (_isrunning == true)
+                    _toRunContent = "停止";
+                else
+                    _toRunContent = "运行";
                 if (PropertyChanged != null)
+                {
                     this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("IsGenerateEn"));
+                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("ToRunContent"));
+                }
             }
+        }
+        public string ToRunContent
+        {
+            get { return _toRunContent; }
+        }
+        public bool IsGenerateEn
+        {
+            get { return !_isrunning; }
         }
         public bool IsDataValid
         {

@@ -113,10 +113,19 @@ namespace VisualSort
             {
                 if (buckets[i].Count > 0)
                 {
-                    canvas.Children.Remove(canvas.FindName("Bucket" + i.ToString()) as Button);
-                    canvas.UnregisterName("Bucket" + i.ToString());
+                    if (canvas.FindName("Bucket" + i.ToString()) != null)
+                    {
+                        canvas.Children.Remove(canvas.FindName("Bucket" + i.ToString()) as Button);
+                        canvas.UnregisterName("Bucket" + i.ToString());
+                    }
                 }
             }
+        }
+        public void DeleteBucket()
+        {
+            for (int i = 0; i < 10; i++)
+                if (canvas.FindName("Bucket" + i.ToString()) != null)
+                    canvas.UnregisterName("Bucket" + i.ToString());
         }
     }
 }

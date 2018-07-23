@@ -26,6 +26,7 @@ namespace VisualSort
         DataSet dataSet;
         SortType sortType;
         Status status;
+        Thread thread;
         public MainWindow()
         {
             InitializeComponent();
@@ -43,8 +44,14 @@ namespace VisualSort
                 Source = status,
                 Path = new PropertyPath("IsDataValid")
             };
+            Binding statusBind3 = new Binding
+            {
+                Source = status,
+                Path = new PropertyPath("ToRunContent")
+            };
             Generate.SetBinding(Button.IsEnabledProperty, statusBind1);
             ToRun.SetBinding(Button.IsEnabledProperty, statusBind2);
+            ToRun.SetBinding(Button.ContentProperty, statusBind3);
         }
 
         private void GenerateNums(object sender, RoutedEventArgs e)
@@ -58,45 +65,56 @@ namespace VisualSort
         
         private void Run(object sender, RoutedEventArgs e)
         {
-            Thread thread;
-            Settings.TimeSpanMs = Convert.ToInt32(TimeInput.Text);
-            status.IsGenerateEn = false;
-            switch (sortType.SortEnum)
+            if (status.IsRunning == false)
             {
-                case SortTypeEnum.SelectSort:
-                    thread = new Thread(new ThreadStart(SelectSort));
-                    thread.Start();
-                    break;
-                case SortTypeEnum.BubbleSort:
-                    thread = new Thread(new ThreadStart(BubbleSort));
-                    thread.Start();
-                    break;
-                case SortTypeEnum.MergeSort:
-                    thread = new Thread(new ThreadStart(MergeSort));
-                    thread.Start();
-                    break;
-                case SortTypeEnum.ShellSort:
-                    thread = new Thread(new ThreadStart(ShellSort));
-                    thread.Start();
-                    break;
-                case SortTypeEnum.QuickSort:
-                    thread = new Thread(new ThreadStart(QuickSort));
-                    thread.Start();
-                    break;
-                case SortTypeEnum.BucketSort:
-                    thread = new Thread(new ThreadStart(BucketSort));
-                    thread.Start();
-                    break;
-                case SortTypeEnum.InsertSort:
-                    thread = new Thread(new ThreadStart(InsertSort));
-                    thread.Start();
-                    break;
-                case SortTypeEnum.HeapSort:
-                    thread = new Thread(new ThreadStart(HeapSort));
-                    thread.Start();
-                    break;
-                default:
-                    break;
+                Settings.TimeSpanMs = Convert.ToInt32(TimeInput.Text);
+                status.IsRunning = true;
+                switch (sortType.SortEnum)
+                {
+                    case SortTypeEnum.SelectSort:
+                        thread = new Thread(new ThreadStart(SelectSort));
+                        thread.Start();
+                        break;
+                    case SortTypeEnum.BubbleSort:
+                        thread = new Thread(new ThreadStart(BubbleSort));
+                        thread.Start();
+                        break;
+                    case SortTypeEnum.MergeSort:
+                        thread = new Thread(new ThreadStart(MergeSort));
+                        thread.Start();
+                        break;
+                    case SortTypeEnum.ShellSort:
+                        thread = new Thread(new ThreadStart(ShellSort));
+                        thread.Start();
+                        break;
+                    case SortTypeEnum.QuickSort:
+                        thread = new Thread(new ThreadStart(QuickSort));
+                        thread.Start();
+                        break;
+                    case SortTypeEnum.BucketSort:
+                        thread = new Thread(new ThreadStart(BucketSort));
+                        thread.Start();
+                        break;
+                    case SortTypeEnum.InsertSort:
+                        thread = new Thread(new ThreadStart(InsertSort));
+                        thread.Start();
+                        break;
+                    case SortTypeEnum.HeapSort:
+                        thread = new Thread(new ThreadStart(HeapSort));
+                        thread.Start();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                thread.Abort();
+                area.Children.Clear();
+                if (sortType.SortEnum == SortTypeEnum.BucketSort)
+                    dataSet.DeleteBucket();
+                status.IsRunning = false;
+                status.IsDataValid = false;
             }
         }
 
